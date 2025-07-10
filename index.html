@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Worldover Platform API</title>
-    <!-- A modern, clean, and readable style for API documentation. -->
     <style type="text/css">
       :root {
         --primary-color: #485a6e;
@@ -21,6 +20,9 @@
       }
       * {
         box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
       }
       body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -95,6 +97,38 @@
         color: var(--text-secondary);
         font-weight: bold;
       }
+      .toc {
+        background: var(--bg-light);
+        padding: 24px;
+        border-radius: 12px;
+        margin-top: 32px;
+        border: 1px solid var(--border-color);
+      }
+      .toc ul {
+        padding-left: 20px;
+        margin: 0;
+        column-count: 2;
+        column-gap: 40px;
+      }
+      .toc li {
+        margin-bottom: 12px;
+      }
+      .toc a {
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+      }
+      .toc .method-verb-sm {
+        font-size: 12px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 5px;
+        color: #fff;
+        min-width: 60px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-right: 12px;
+      }
       .method-wrapper {
           border: 1px solid var(--border-color);
           border-radius: 12px; /* Softer corners */
@@ -122,8 +156,8 @@
         text-align: center;
         text-transform: uppercase;
       }
-      .method-verb.get { background-color: var(--primary-color); }
-      .method-verb.post { background-color: var(--success-color); }
+      .method-verb.get, .method-verb-sm.get { background-color: var(--primary-color); }
+      .method-verb.post, .method-verb-sm.post { background-color: var(--success-color); }
       .method-path {
         font-family: 'SF Mono', Monaco, Consolas, 'Courier New', monospace;
         font-size: 18px; /* Larger path */
@@ -210,9 +244,23 @@
       <div class="app-desc">The official Worldover API for retrieving and updating your organisation's data in the Worldover platform.</div>
       <p><span class="version">1.0.0</span></p>
 
-      <!-- Products Endpoints -->
-      <h2>Products</h2>
-      <div class="method-wrapper">
+      <div class="toc">
+        <h3>Table of Contents</h3>
+        <ul>
+          <li><a href="#getAllProducts"><span class="method-verb-sm get">GET</span> /products</a></li>
+          <li><a href="#createProduct"><span class="method-verb-sm post">POST</span> /products</a></li>
+          <li><a href="#getProductById"><span class="method-verb-sm get">GET</span> /products/{productId}</a></li>
+          <li><a href="#getAllRawMaterials"><span class="method-verb-sm get">GET</span> /raw-materials</a></li>
+          <li><a href="#createRawMaterial"><span class="method-verb-sm post">POST</span> /raw-materials</a></li>
+          <li><a href="#getRawMaterialById"><span class="method-verb-sm get">GET</span> /raw-materials/{rawMaterialId}</a></li>
+          <li><a href="#getLinkedOrganisations"><span class="method-verb-sm get">GET</span> /linked-organisations</a></li>
+          <li><a href="#createLinkedOrganisation"><span class="method-verb-sm post">POST</span> /linked-organisations</a></li>
+          <li><a href="#getLinkedOrganisationById"><span class="method-verb-sm get">GET</span> /linked-organisations/{linkedOrganisationId}</a></li>
+        </ul>
+      </div>
+
+      <h2 id="products">Products</h2>
+      <div id="getAllProducts" class="method-wrapper">
         <div class="method-header">
           <div class="method-verb get">GET</div>
           <div class="method-path">/products</div>
@@ -242,7 +290,7 @@
           </div>
         </div>
       </div>
-      <div class="method-wrapper">
+      <div id="createProduct" class="method-wrapper">
         <div class="method-header">
           <div class="method-verb post">POST</div>
           <div class="method-path">/products</div>
@@ -268,7 +316,7 @@
           <p>Product created successfully.</p>
         </div>
       </div>
-      <div class="method-wrapper">
+      <div id="getProductById" class="method-wrapper">
         <div class="method-header">
           <div class="method-verb get">GET</div>
           <div class="method-path">/products/<span class="param">{productId}</span></div>
@@ -295,9 +343,8 @@
 
       <hr/>
 
-      <!-- Raw Materials Endpoints -->
-      <h2>Raw Materials</h2>
-      <div class="method-wrapper">
+      <h2 id="raw-materials">Raw Materials</h2>
+      <div id="getAllRawMaterials" class="method-wrapper">
         <div class="method-header">
           <div class="method-verb get">GET</div>
           <div class="method-path">/raw-materials</div>
@@ -318,7 +365,7 @@
           </div>
         </div>
       </div>
-      <div class="method-wrapper">
+      <div id="createRawMaterial" class="method-wrapper">
         <div class="method-header">
           <div class="method-verb post">POST</div>
           <div class="method-path">/raw-materials</div>
@@ -345,7 +392,7 @@
           <p>Raw Material created successfully.</p>
         </div>
       </div>
-      <div class="method-wrapper">
+      <div id="getRawMaterialById" class="method-wrapper">
         <div class="method-header">
           <div class="method-verb get">GET</div>
           <div class="method-path">/raw-materials/<span class="param">{rawMaterialId}</span></div>
@@ -372,9 +419,8 @@
 
       <hr/>
 
-      <!-- Linked Organisations Endpoints -->
-      <h2>Linked Organisations</h2>
-      <div class="method-wrapper">
+      <h2 id="linked-organisations">Linked Organisations</h2>
+      <div id="getLinkedOrganisations" class="method-wrapper">
         <div class="method-header">
           <div class="method-verb get">GET</div>
           <div class="method-path">/linked-organisations</div>
@@ -395,7 +441,7 @@
           </div>
         </div>
       </div>
-      <div class="method-wrapper">
+      <div id="createLinkedOrganisation" class="method-wrapper">
         <div class="method-header">
           <div class="method-verb post">POST</div>
           <div class="method-path">/linked-organisations</div>
@@ -421,7 +467,7 @@
           <p>Linked Organisation created successfully.</p>
         </div>
       </div>
-      <div class="method-wrapper">
+      <div id="getLinkedOrganisationById" class="method-wrapper">
         <div class="method-header">
           <div class="method-verb get">GET</div>
           <div class="method-path">/linked-organisations/<span class="param">{linkedOrganisationId}</span></div>
@@ -446,11 +492,10 @@
         </div>
       </div>
 
-      <!-- Models Section -->
       <h2>Models</h2>
       <div id="Product" class="model-container">
         <h3 class="model-title">Product</h3>
-        <p class="model-description">A product in the database.</p>
+        <p class="model-description">A product in the database test</p>
         <table class="properties">
           <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
           <tbody>
@@ -459,7 +504,39 @@
             <tr><td>dateCreated<span class="required">*</span></td><td>string</td><td>Date of creation.</td></tr>
             <tr><td>status<span class="required">*</span></td><td>string (enum)</td><td>Read only. <br><i>Allowed values: compliant, nonCompliant, inProgress</i></td></tr>
             <tr><td>fields<span class="required">*</span></td><td><code class="inline">array</code> of <a href="#Field">Field</a></td><td>Custom data fields associated with the product.</td></tr>
-            <tr><td>composition<span class="required">*</span></td><td>object</td><td>Object containing the product's constituent parts.</td></tr>
+            <tr>
+              <td>composition<span class="required">*</span></td>
+              <td>object</td>
+              <td>
+                Object containing the product's constituent parts.
+                <table class="properties" style="margin-top: 12px; border-radius: 6px;">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Type</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>formulations<span class="required">*</span></td>
+                      <td><code class="inline">array</code> of <a href="#Formulation-Summary">Formulation-Summary</a></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>components<span class="required">*</span></td>
+                      <td><code class="inline">array</code> of <a href="#Component-Summary">Component-Summary</a></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>artworks<span class="required">*</span></td>
+                      <td><code class="inline">array</code> of <a href="#Artwork-Summary">Artwork-Summary</a></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

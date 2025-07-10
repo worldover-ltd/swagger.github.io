@@ -4,997 +4,580 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Worldover Platform API</title>
+    <!-- A modern, clean, and readable style for API documentation. -->
     <style type="text/css">
       :root {
         --primary-color: #485a6e;
-        --success-color: #485a6e;
+        --success-color: #16a34a; /* A slightly more vibrant green */
         --warning-color: #d97706;
         --danger-color: #dc2626;
         --link-color: #2563eb;
         --link-hover-color: #1d4ed8;
         --text-primary: #1f2937;
-        --text-secondary: #6b7280;
-        --border-color: #e5e7eb;
+        --text-secondary: #4b5563;
+        --border-color: #d1d5db;
         --bg-light: #f9fafb;
         --bg-code: #f3f4f6;
       }
-
       * {
         box-sizing: border-box;
       }
-      
       body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         font-size: 16px;
         line-height: 1.6;
         color: var(--text-primary);
         margin: 0;
-        padding: 20px;
+        padding: 0;
+        background-color: #fff;
+      }
+      .container {
         max-width: 1200px;
         margin: 0 auto;
+        padding: 24px;
       }
-      
       h1 {
-        font-size: 32px;
+        font-size: 36px;
         font-weight: 700;
-        margin-bottom: 8px;
+        margin: 0 0 8px 0;
         color: var(--text-primary);
       }
-      
       h2 {
-        font-size: 20px;
+        font-size: 28px;
         font-weight: 600;
-        margin-top: 40px;
-        margin-bottom: 20px;
+        margin-top: 48px;
+        margin-bottom: 24px;
+        padding-bottom: 12px;
+        color: var(--text-primary);
+        border-bottom: 2px solid var(--border-color);
+      }
+      h3 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-top: 32px;
+        margin-bottom: 16px;
         color: var(--text-primary);
       }
-      
-      h3 {
+      h4 {
         font-size: 18px;
         font-weight: 600;
-        margin-top: 20px;
+        margin-top: 24px;
         margin-bottom: 12px;
-        color: var(--text-primary);
+        color: var(--text-secondary);
       }
-      
-      h4 {
-        font-size: 16px;
-        font-weight: 600;
-        color: var(--text-primary);
-      }
-      
       hr {
-        height: 1px;
+        height: 2px;
         border: 0;
         background-color: var(--border-color);
-        margin: 32px 0;
+        margin: 64px 0;
       }
-      
       a {
         color: var(--link-color);
         text-decoration: none;
+        font-weight: 500;
         transition: color 0.2s;
       }
-      
       a:hover {
         color: var(--link-hover-color);
         text-decoration: underline;
       }
-      
       .app-desc {
         color: var(--text-secondary);
         margin-bottom: 8px;
-      }
-      
-      .app-desc:first-of-type {
-        margin-top: 8px;
         font-size: 18px;
+        max-width: 80ch;
+      }
+      .version {
+        font-size: 14px;
+        background-color: var(--bg-code);
+        padding: 4px 8px;
+        border-radius: 4px;
+        color: var(--text-secondary);
+        font-weight: bold;
+      }
+      .method-wrapper {
+          border: 1px solid var(--border-color);
+          border-radius: 12px; /* Softer corners */
+          margin-bottom: 32px;
+          overflow: hidden;
+          transition: box-shadow 0.3s ease;
+      }
+      .method-wrapper:hover {
+          box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      }
+      .method-header {
+          display: flex;
+          align-items: center;
+          padding: 16px 24px;
+          background-color: var(--bg-light);
+          border-bottom: 1px solid var(--border-color);
+      }
+      .method-verb {
+        font-size: 14px;
+        font-weight: 700;
+        padding: 6px 12px;
+        border-radius: 6px;
+        color: #fff;
+        min-width: 80px;
+        text-align: center;
+        text-transform: uppercase;
+      }
+      .method-verb.get { background-color: var(--primary-color); }
+      .method-verb.post { background-color: var(--success-color); }
+      .method-path {
+        font-family: 'SF Mono', Monaco, Consolas, 'Courier New', monospace;
+        font-size: 18px; /* Larger path */
+        font-weight: 600;
+        margin-left: 16px;
         color: var(--text-primary);
       }
-      
-      .param-name {
-        width: 100%;
-        font-weight: 500;
+      .method-path .param {
+          color: var(--warning-color);
       }
-      
-      .license-info {
-        margin-left: 20px;
-        margin-top: 20px;
+      .method-summary {
+        margin-left: auto;
+        font-size: 16px;
         font-weight: 500;
+        color: var(--text-secondary);
+        text-align: right;
       }
-      
-      .license-url {
-        margin-left: 20px;
-        font-size: 14px;
+      .method-body {
+        padding: 24px;
+      }
+      .method-description {
+        margin: 0 0 24px 0;
         color: var(--text-secondary);
       }
-      
-      .model {
-        margin: 0 0 20px 20px;
-        padding: 16px;
+      table.properties {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 16px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      table.properties th, table.properties td {
+        text-align: left;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border-color);
+        vertical-align: top;
+      }
+      table.properties tr:last-child th, table.properties tr:last-child td {
+        border-bottom: none;
+      }
+      table.properties th {
+        background-color: var(--bg-light);
+        font-weight: 600;
+      }
+      table.properties td:first-child {
+        font-family: 'SF Mono', Monaco, Consolas, 'Courier New', monospace;
+        font-weight: 600;
+      }
+      table.properties .required {
+        color: var(--danger-color);
+        font-weight: bold;
+        margin-left: 4px;
+      }
+      code.inline {
+        background-color: var(--bg-code);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+        font-family: 'SF Mono', Monaco, Consolas, 'Courier New', monospace;
+      }
+      .model-container {
+        padding: 24px;
         background-color: var(--bg-light);
         border-radius: 8px;
         border: 1px solid var(--border-color);
+        margin-top: 16px;
       }
-      
-      .method {
-        margin-left: 20px;
-        margin-bottom: 40px;
-      }
-      
-      .method-notes {
-        margin: 16px 0 20px 0;
-        color: var(--text-secondary);
-      }
-      
-      pre {
-        padding: 12px 16px;
-        margin-bottom: 16px;
-        border-radius: 6px;
-        overflow-x: auto;
-        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-        font-size: 14px;
-      }
-      
-      .http-method {
-        text-transform: uppercase;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-      }
-      
-      pre.get {
-        background-color: var(--primary-color);
-        color: white;
-      }
-      
-      pre.post {
-        background-color: var(--success-color);
-        color: white;
-      }
-      
-      pre.put {
-        background-color: var(--warning-color);
-        color: white;
-      }
-      
-      pre.delete {
-        background-color: var(--danger-color);
-        color: white;
-      }
-      
-      .huge {
-        color: #fff;
-        font-size: 18px;
-      }
-      
-      pre.example {
-        background-color: var(--bg-code);
-        border: 1px solid var(--border-color);
-        color: var(--text-primary);
-        max-height: 400px;
-        overflow-y: auto;
-      }
-      
-      code {
-        white-space: pre;
-        font-size: 13px;
-      }
-      
-      .nickname {
-        font-weight: 600;
-        color: var(--primary-color);
-        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-        font-size: 14px;
-      }
-      
-      .method-path {
-        font-size: 1.5em;
-        margin-bottom: 16px;
-      }
-      
-      .method-summary {
+       .model-title {
         font-size: 20px;
         font-weight: 600;
-        margin-bottom: 8px;
-      }
-      
-      .up {
-        float: right;
-        padding: 4px 12px;
-        background-color: var(--bg-light);
-        border: 1px solid var(--border-color);
-        border-radius: 4px;
-        font-size: 14px;
-        transition: all 0.2s;
-        color: var(--link-color);
-      }
-      
-      .up:hover {
-        background-color: var(--link-color);
-        color: white;
-        border-color: var(--link-color);
-        text-decoration: none;
-      }
-      
-      .parameter {
-        width: 500px;
-      }
-      
-      .param {
-        width: 500px;
-        padding: 10px 0 0 20px;
-        font-weight: 600;
-        color: var(--text-primary);
-      }
-      
-      .param-desc {
-        width: 700px;
-        padding: 4px 0 0 20px;
-        color: var(--text-secondary);
-        line-height: 1.5;
-      }
-      
-      .param-type {
-        font-style: italic;
-        color: var(--text-secondary);
-        font-size: 14px;
-      }
-      
-      /* Model links in param-type */
-      .param-type a {
-        color: var(--link-color);
-        font-weight: 500;
-      }
-      
-      .param-type a:hover {
-        color: var(--link-hover-color);
-      }
-      
-      .param-enum-header {
-        width: 700px;
-        padding: 0 0 0 60px;
-        color: var(--text-secondary);
-        font-weight: 600;
-      }
-      
-      .param-enum {
-        width: 700px;
-        padding: 0 0 0 80px;
-        color: var(--text-secondary);
-        font-style: italic;
-      }
-      
-      .field-label {
-        padding: 0;
-        margin: 20px 0 12px 0;
-        clear: both;
-        font-weight: 600;
-        color: var(--text-primary);
-        font-size: 16px;
-      }
-      
-      .field-items {
-        padding: 0 0 10px 0;
-        margin-bottom: 10px;
-      }
-      
-      .return-type {
-        clear: both;
-        padding-bottom: 10px;
-        color: var(--text-secondary);
-      }
-      
-      .return-type a {
-        color: var(--link-color);
-        font-weight: 500;
-      }
-      
-      .return-type a:hover {
-        color: var(--link-hover-color);
-      }
-      
-      .param-header {
-        font-weight: 600;
-      }
-      
-      .method-tags {
-        text-align: right;
-      }
-      
-      .method-tag {
-        background: var(--success-color);
-        border-radius: 4px;
-        padding: 4px 12px;
-        margin: 2px;
-        color: #FFF;
-        display: inline-block;
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 500;
-        transition: opacity 0.2s;
-      }
-      
-      .method-tag:hover {
-        opacity: 0.9;
-        text-decoration: none;
-      }
-      
-      .model-description {
+        margin: 0 0 12px 0;
+       }
+       .model-description {
         color: var(--text-secondary);
         margin-bottom: 16px;
         font-style: italic;
-      }
-      
-      /* Table of contents improvements */
-      ul, ol {
-        line-height: 1.8;
-      }
-      
-      ul li, ol li {
-        margin-bottom: 4px;
-      }
-      
-      /* Media type styling */
-      .header {
-        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-        font-size: 14px;
-        background-color: var(--bg-code);
-        padding: 2px 6px;
-        border-radius: 3px;
-      }
-      
-      /* Example data header */
-      .example-data-content-type {
-        font-size: 13px;
-        color: var(--text-secondary);
-        margin-bottom: 8px;
-        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-      }
-      
-      /* Responses section model links */
-      .field-label + a {
-        color: var(--link-color);
-        font-weight: 500;
-      }
-      
-      .field-label + a:hover {
-        color: var(--link-hover-color);
       }
     </style>
   </head>
   <body>
-  <h1>Worldover Platform API</h1>
-    <div class="app-desc">The official Worldover API for retrieving and updating your organisation's data in the Worldover platform.</div>
-
-  <h3>Table of Contents </h3>
-  <div class="method-summary"></div>
-  <ul>
-  <li><a href="#createLinkedOrganisation"><code><span class="http-method">post</span> /linked-organisations</code></a></li>
-  <li><a href="#createProduct"><code><span class="http-method">post</span> /products</code></a></li>
-  <li><a href="#createRawMaterial"><code><span class="http-method">post</span> /raw-materials</code></a></li>
-  <li><a href="#getAllProducts"><code><span class="http-method">get</span> /products</code></a></li>
-  <li><a href="#getAllRawMaterials"><code><span class="http-method">get</span> /raw-materials</code></a></li>
-  <li><a href="#getLinkedOrganisationById"><code><span class="http-method">get</span> /linked-organisations/{linkedOrganisationId}</code></a></li>
-  <li><a href="#getLinkedOrganisations"><code><span class="http-method">get</span> /linked-organisations</code></a></li>
-  <li><a href="#getProductById"><code><span class="http-method">get</span> /products/{productId}</code></a></li>
-  <li><a href="#getRawMaterialById"><code><span class="http-method">get</span> /raw-materials/{rawMaterialId}</code></a></li>
-  </ul>
-  <hr/>
-  <div class="method"><a name="createLinkedOrganisation"></a>
-    <div class="method-path">
-    
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /linked-organisations</code></pre></div>
-    <div class="method-summary">Create a new Linked Organisation (<span class="nickname">createLinkedOrganisation</span>)</div>
-    <div class="method-notes">Creates a new Linked Organisation with the given name.</div>
-
-
-    <h3 class="field-label">Consumes</h3>
-    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Request body</h3>
-    <div class="field-items">
-      <div class="param">body <a href="#linkedorganisations_body">linkedorganisations_body</a> (optional)</div>
-      
-            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
-                </div>  <!-- field-items -->
-
-
-
-
-
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    Linked Organisation created successfully
-        <a href="#"></a>
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="createProduct"></a>
-    <div class="method-path">
-    
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /products</code></pre></div>
-    <div class="method-summary">Create a new product (<span class="nickname">createProduct</span>)</div>
-    <div class="method-notes">Creates a new Product according to the provided template ID. If no template ID is provided, it creates a blank Product.</div>
-
-
-    <h3 class="field-label">Consumes</h3>
-    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Request body</h3>
-    <div class="field-items">
-      <div class="param">body <a href="#products_body">products_body</a> (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
-                </div>  <!-- field-items -->
-
-
-
-
-
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    Product created successfully
-        <a href="#"></a>
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="createRawMaterial"></a>
-    <div class="method-path">
-    
-    <pre class="post"><code class="huge"><span class="http-method">post</span> /raw-materials</code></pre></div>
-    <div class="method-summary">Create a new Raw Material (<span class="nickname">createRawMaterial</span>)</div>
-    <div class="method-notes">Creates a new Raw Material according to the provided template ID. If no template ID is provided, it creates a blank Raw Material.</div>
-
-
-    <h3 class="field-label">Consumes</h3>
-    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Request body</h3>
-    <div class="field-items">
-      <div class="param">body <a href="#rawmaterials_body">rawmaterials_body</a> (optional)</div>
-      
-            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
-                </div>  <!-- field-items -->
-
-
-
-
-
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    Raw Material created successfully
-        <a href="#"></a>
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="getAllProducts"></a>
-    <div class="method-path">
-    
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /products</code></pre></div>
-    <div class="method-summary">Retrieve all products (<span class="nickname">getAllProducts</span>)</div>
-    <div class="method-notes">List all Products in your organisation</div>
-
-
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      array[<a href="#Product-Summary">Product-Summary</a>]
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>[ {
-  "name" : "name",
-  "id" : "id",
-  "status" : ""
-}, {
-  "name" : "name",
-  "id" : "id",
-  "status" : ""
-} ]</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    
-        
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="getAllRawMaterials"></a>
-    <div class="method-path">
-    
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /raw-materials</code></pre></div>
-    <div class="method-summary">Retrieve all Raw Materials (<span class="nickname">getAllRawMaterials</span>)</div>
-    <div class="method-notes">List all Raw Materials in your organisation</div>
-
-
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      array[<a href="#Raw-Material-Summary">Raw-Material-Summary</a>]
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>[ {
-  "name" : "name",
-  "id" : "id",
-  "status" : ""
-}, {
-  "name" : "name",
-  "id" : "id",
-  "status" : ""
-} ]</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    
-        
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="getLinkedOrganisationById"></a>
-    <div class="method-path">
-    
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /linked-organisations/{linkedOrganisationId}</code></pre></div>
-    <div class="method-summary">Retrieve a single Linked Organisation (<span class="nickname">getLinkedOrganisationById</span>)</div>
-    <div class="method-notes">Get information about a single Linked Organisation by its ID.</div>
-
-    <h3 class="field-label">Path parameters</h3>
-    <div class="field-items">
-      <div class="param">linkedOrganisationId (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
-
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      <a href="#Linked-Organisation">Linked-Organisation</a>
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "dateCreated" : "dateCreated",
-  "name" : "name",
-  "id" : "id",
-  "fields" : [ {
-    "name" : "name",
-    "id" : "id",
-    "value" : ""
-  }, {
-    "name" : "name",
-    "id" : "id",
-    "value" : ""
-  } ],
-  "status" : ""
-}</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    
-        <a href="#Linked-Organisation">Linked-Organisation</a>
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="getLinkedOrganisations"></a>
-    <div class="method-path">
-    
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /linked-organisations</code></pre></div>
-    <div class="method-summary">Retrieve all Linked-Organisations (<span class="nickname">getLinkedOrganisations</span>)</div>
-    <div class="method-notes">List all Linked Organisations that you are connected to.</div>
-
-
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      array[<a href="#Linked-Organisation-Summary">Linked-Organisation-Summary</a>]
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>[ {
-  "name" : "name",
-  "id" : "id",
-  "status" : ""
-}, {
-  "name" : "name",
-  "id" : "id",
-  "status" : ""
-} ]</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    
-        
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="getProductById"></a>
-    <div class="method-path">
-    
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /products/{productId}</code></pre></div>
-    <div class="method-summary">Retrieve a single product (<span class="nickname">getProductById</span>)</div>
-    <div class="method-notes">Get information about a single Product by its ID.</div>
-
-    <h3 class="field-label">Path parameters</h3>
-    <div class="field-items">
-      <div class="param">productId (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
-
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      <a href="#Product">Product</a>
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "dateCreated" : "dateCreated",
-  "composition" : {
-    "components" : [ {
-      "name" : "name",
-      "id" : "id",
-      "status" : ""
-    }, {
-      "name" : "name",
-      "id" : "id",
-      "status" : ""
-    } ],
-    "formulations" : [ {
-      "isLive" : true,
-      "latestVersion" : 0,
-      "name" : "name",
-      "id" : "id",
-      "status" : ""
-    }, {
-      "isLive" : true,
-      "latestVersion" : 0,
-      "name" : "name",
-      "id" : "id",
-      "status" : ""
-    } ],
-    "artworks" : [ {
-      "latestVersion" : 6,
-      "name" : "name",
-      "id" : "id",
-      "status" : ""
-    }, {
-      "latestVersion" : 6,
-      "name" : "name",
-      "id" : "id",
-      "status" : ""
-    } ]
-  },
-  "name" : "name",
-  "id" : "id",
-  "fields" : [ {
-    "name" : "name",
-    "id" : "id",
-    "value" : ""
-  }, {
-    "name" : "name",
-    "id" : "id",
-    "value" : ""
-  } ],
-  "status" : ""
-}</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    
-        <a href="#Product">Product</a>
-  </div> <!-- method -->
-  <hr/>
-  <div class="method"><a name="getRawMaterialById"></a>
-    <div class="method-path">
-    
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /raw-materials/{rawMaterialId}</code></pre></div>
-    <div class="method-summary">Retrieve a single Raw Material (<span class="nickname">getRawMaterialById</span>)</div>
-    <div class="method-notes">Get information about a single Raw Material by its ID.</div>
-
-    <h3 class="field-label">Path parameters</h3>
-    <div class="field-items">
-      <div class="param">rawMaterialId (required)</div>
-      
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
-
-
-
-
-
-
-
-    <h3 class="field-label">Return type</h3>
-    <div class="return-type">
-      <a href="#Raw-Material">Raw-Material</a>
-      
-    </div>
-
-    <!--Todo: process Response Object and its headers, schema, examples -->
-
-    <h3 class="field-label">Example data</h3>
-    <div class="example-data-content-type">Content-Type: application/json</div>
-    <pre class="example"><code>{
-  "dateCreated" : "dateCreated",
-  "name" : "name",
-  "id" : "id",
-  "fields" : [ {
-    "name" : "name",
-    "id" : "id",
-    "value" : ""
-  }, {
-    "name" : "name",
-    "id" : "id",
-    "value" : ""
-  } ],
-  "status" : ""
-}</code></pre>
-
-    <h3 class="field-label">Produces</h3>
-    This API call produces the following media types according to the <span class="header">Accept</span> request header;
-    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
-    <ul>
-      <li><code>application/json</code></li>
-    </ul>
-
-    <h3 class="field-label">Responses</h3>
-    <h4 class="field-label">200</h4>
-    
-        <a href="#Raw-Material">Raw-Material</a>
-  </div> <!-- method -->
-  <hr/>
-
-  <h2><a name="__Models">Models</a></h2>
-  [ Jump to <a href="#__Methods">Methods</a> ]
-
-  <h3>Table of Contents</h3>
-  <ol>
-    <li><a href="#Artwork-Summary"><code>Artwork-Summary</code> - Artwork-Summary</a></li>
-    <li><a href="#Component-Summary"><code>Component-Summary</code> - Component-Summary</a></li>
-    <li><a href="#Field"><code>Field</code> - Field</a></li>
-    <li><a href="#Formulation-Summary"><code>Formulation-Summary</code> - Formulation-Summary</a></li>
-    <li><a href="#Linked-Organisation"><code>Linked-Organisation</code></a></li>
-    <li><a href="#Linked-Organisation-Summary"><code>Linked-Organisation-Summary</code> - Linked-Organisation-Summary</a></li>
-    <li><a href="#Product"><code>Product</code></a></li>
-    <li><a href="#Product-Summary"><code>Product-Summary</code> - Product-Summary</a></li>
-    <li><a href="#Product_composition"><code>Product_composition</code></a></li>
-    <li><a href="#Raw-Material"><code>Raw-Material</code></a></li>
-    <li><a href="#Raw-Material-Summary"><code>Raw-Material-Summary</code> - Raw-Material-Summary</a></li>
-    <li><a href="#linkedorganisations_body"><code>linkedorganisations_body</code></a></li>
-    <li><a href="#products_body"><code>products_body</code></a></li>
-    <li><a href="#rawmaterials_body"><code>rawmaterials_body</code></a></li>
-  </ol>
-
-  <div class="model">
-    <h3><a name="Artwork-Summary"><code>Artwork-Summary</code> - Artwork-Summary</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>An Artwork for listing in a Product's composition</div>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">status </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">latestVersion (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="Component-Summary"><code>Component-Summary</code> - Component-Summary</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>A Component for listing in a Product's composition</div>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">status </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="Field"><code>Field</code> - Field</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>A single property associated with a Worldover database item</div>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">value (optional)</div><div class="param-desc"><span class="param-type"><a href="#"></a></span>  </div>
-      <div class="param-desc"><span class="param-type">oneOf:</span>
+    <div class="container">
+      <h1>Worldover Platform API</h1>
+      <div class="app-desc">The official Worldover API for retrieving and updating your organisation's data in the Worldover platform.</div>
+      <p><span class="version">1.0.0</span></p>
+
+      <!-- Products Endpoints -->
+      <h2>Products</h2>
+      <div class="method-wrapper">
+        <div class="method-header">
+          <div class="method-verb get">GET</div>
+          <div class="method-path">/products</div>
+          <div class="method-summary">Retrieve all products</div>
+        </div>
+        <div class="method-body">
+          <p class="method-description">List all Products in your organisation.</p>
+          <h3>Parameters</h3>
+          <table class="properties">
+            <thead>
+              <tr><th>Name</th><th>In</th><th>Type</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>organisationId<span class="required">*</span></td>
+                <td>header</td>
+                <td>string</td>
+                <td>Your organisation Id</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3>Responses</h3>
+          <h4>200 OK</h4>
+          <div class="model-container">
+            <div class="model-title">Response Body: <code class="inline">array</code> of <a href="#Product-Summary">Product-Summary</a></div>
+            <p class="model-description">A summary of a product, suitable for lists.</p>
+          </div>
+        </div>
       </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="Formulation-Summary"><code>Formulation-Summary</code> - Formulation-Summary</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>A Formulation for listing in a Product's composition</div>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">status </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">isLive (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
-<div class="param">latestVersion (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="Linked-Organisation"><code>Linked-Organisation</code></a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>A Linked Organisation in the database</div>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">dateCreated </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">status </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">fields </div><div class="param-desc"><span class="param-type"><a href="#Field">array[Field]</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="Linked-Organisation-Summary"><code>Linked-Organisation-Summary</code> - Linked-Organisation-Summary</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>A Linked Organisation in the database for listing in a table</div>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">status </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="Product"><code>Product</code></a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>A product in the database test</div>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">dateCreated </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">status </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">fields </div><div class="param-desc"><span class="param-type"><a href="#Field">array[Field]</a></span>  </div>
-<div class="param">composition </div><div class="param-desc"><span class="param-type"><a href="#Product_composition">Product_composition</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="Product-Summary"><code>Product-Summary</code> - Product-Summary</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>A product in the database for listing in a table</div>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">status </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="Product_composition"><code>Product_composition</code></a> <a class="up" href="#__Models">Up</a></h3>
-    
-    <div class="field-items">
-      <div class="param">formulations </div><div class="param-desc"><span class="param-type"><a href="#Formulation-Summary">array[Formulation-Summary]</a></span>  </div>
-<div class="param">components </div><div class="param-desc"><span class="param-type"><a href="#Component-Summary">array[Component-Summary]</a></span>  </div>
-<div class="param">artworks </div><div class="param-desc"><span class="param-type"><a href="#Artwork-Summary">array[Artwork-Summary]</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="Raw-Material"><code>Raw-Material</code></a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>A Raw Material in the database</div>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">dateCreated </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">status </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">fields </div><div class="param-desc"><span class="param-type"><a href="#Field">array[Field]</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="Raw-Material-Summary"><code>Raw-Material-Summary</code> - Raw-Material-Summary</a> <a class="up" href="#__Models">Up</a></h3>
-    <div class='model-description'>A Raw Material in the database for listing in a table</div>
-    <div class="field-items">
-      <div class="param">id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">status </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="linkedorganisations_body"><code>linkedorganisations_body</code></a> <a class="up" href="#__Models">Up</a></h3>
-    
-    <div class="field-items">
-      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">organisationContactEmail (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="products_body"><code>products_body</code></a> <a class="up" href="#__Models">Up</a></h3>
-    
-    <div class="field-items">
-      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">templateId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="rawmaterials_body"><code>rawmaterials_body</code></a> <a class="up" href="#__Models">Up</a></h3>
-    
-    <div class="field-items">
-      <div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">templateId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">supplierId (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
+      <div class="method-wrapper">
+        <div class="method-header">
+          <div class="method-verb post">POST</div>
+          <div class="method-path">/products</div>
+          <div class="method-summary">Create a new product</div>
+        </div>
+        <div class="method-body">
+          <p class="method-description">Creates a new Product. A <code class="inline">templateId</code> can be provided to base the new product on an existing template.</p>
+          <h3>Parameters</h3>
+          <table class="properties">
+            <thead><tr><th>Name</th><th>In</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody><tr><td>organisationId<span class="required">*</span></td><td>header</td><td>string</td><td>Your organisation Id</td></tr></tbody>
+          </table>
+          <h3>Request Body</h3>
+          <table class="properties">
+            <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>name<span class="required">*</span></td><td>string</td><td>The name of the new product.</td></tr>
+              <tr><td>templateId</td><td>string</td><td>The ID of a template to use for creation.</td></tr>
+            </tbody>
+          </table>
+          <h3>Responses</h3>
+          <h4>200 OK</h4>
+          <p>Product created successfully.</p>
+        </div>
+      </div>
+      <div class="method-wrapper">
+        <div class="method-header">
+          <div class="method-verb get">GET</div>
+          <div class="method-path">/products/<span class="param">{productId}</span></div>
+          <div class="method-summary">Retrieve a single product</div>
+        </div>
+        <div class="method-body">
+          <p class="method-description">Get detailed information about a single Product by its ID.</p>
+          <h3>Parameters</h3>
+          <table class="properties">
+            <thead><tr><th>Name</th><th>In</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>productId<span class="required">*</span></td><td>path</td><td>string</td><td>The unique identifier for the product.</td></tr>
+              <tr><td>organisationId<span class="required">*</span></td><td>header</td><td>string</td><td>Your organisation Id</td></tr>
+            </tbody>
+          </table>
+          <h3>Responses</h3>
+          <h4>200 OK</h4>
+          <div class="model-container">
+            <div class="model-title">Response Body: <a href="#Product">Product</a></div>
+            <p class="model-description">The full product object.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+
+      <!-- Raw Materials Endpoints -->
+      <h2>Raw Materials</h2>
+      <div class="method-wrapper">
+        <div class="method-header">
+          <div class="method-verb get">GET</div>
+          <div class="method-path">/raw-materials</div>
+          <div class="method-summary">Retrieve all Raw Materials</div>
+        </div>
+        <div class="method-body">
+          <p class="method-description">List all Raw Materials in your organisation.</p>
+          <h3>Parameters</h3>
+          <table class="properties">
+            <thead><tr><th>Name</th><th>In</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody><tr><td>organisationId<span class="required">*</span></td><td>header</td><td>string</td><td>Your organisation Id</td></tr></tbody>
+          </table>
+          <h3>Responses</h3>
+          <h4>200 OK</h4>
+          <div class="model-container">
+            <div class="model-title">Response Body: <code class="inline">array</code> of <a href="#Raw-Material-Summary">Raw-Material-Summary</a></div>
+            <p class="model-description">A summary of a raw material, suitable for lists.</p>
+          </div>
+        </div>
+      </div>
+      <div class="method-wrapper">
+        <div class="method-header">
+          <div class="method-verb post">POST</div>
+          <div class="method-path">/raw-materials</div>
+          <div class="method-summary">Create a new Raw Material</div>
+        </div>
+        <div class="method-body">
+          <p class="method-description">Creates a new Raw Material. A <code class="inline">templateId</code> can be provided to base it on an existing template.</p>
+          <h3>Parameters</h3>
+          <table class="properties">
+            <thead><tr><th>Name</th><th>In</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody><tr><td>organisationId<span class="required">*</span></td><td>header</td><td>string</td><td>Your organisation Id</td></tr></tbody>
+          </table>
+          <h3>Request Body</h3>
+          <table class="properties">
+            <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>name<span class="required">*</span></td><td>string</td><td>The name of the new raw material.</td></tr>
+              <tr><td>templateId</td><td>string</td><td>The ID of a template to use for creation.</td></tr>
+              <tr><td>supplierId</td><td>string</td><td>The ID of the linked organisation that supplies this material.</td></tr>
+            </tbody>
+          </table>
+          <h3>Responses</h3>
+          <h4>200 OK</h4>
+          <p>Raw Material created successfully.</p>
+        </div>
+      </div>
+      <div class="method-wrapper">
+        <div class="method-header">
+          <div class="method-verb get">GET</div>
+          <div class="method-path">/raw-materials/<span class="param">{rawMaterialId}</span></div>
+          <div class="method-summary">Retrieve a single Raw Material</div>
+        </div>
+        <div class="method-body">
+          <p class="method-description">Get detailed information about a single Raw Material by its ID.</p>
+          <h3>Parameters</h3>
+          <table class="properties">
+            <thead><tr><th>Name</th><th>In</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>rawMaterialId<span class="required">*</span></td><td>path</td><td>string</td><td>The unique identifier for the raw material.</td></tr>
+              <tr><td>organisationId<span class="required">*</span></td><td>header</td><td>string</td><td>Your organisation Id</td></tr>
+            </tbody>
+          </table>
+          <h3>Responses</h3>
+          <h4>200 OK</h4>
+          <div class="model-container">
+            <div class="model-title">Response Body: <a href="#Raw-Material">Raw-Material</a></div>
+            <p class="model-description">The full raw material object.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+
+      <!-- Linked Organisations Endpoints -->
+      <h2>Linked Organisations</h2>
+      <div class="method-wrapper">
+        <div class="method-header">
+          <div class="method-verb get">GET</div>
+          <div class="method-path">/linked-organisations</div>
+          <div class="method-summary">Retrieve all Linked Organisations</div>
+        </div>
+        <div class="method-body">
+          <p class="method-description">List all Linked Organisations that you are connected to (e.g., suppliers, customers).</p>
+          <h3>Parameters</h3>
+          <table class="properties">
+            <thead><tr><th>Name</th><th>In</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody><tr><td>organisationId<span class="required">*</span></td><td>header</td><td>string</td><td>Your organisation Id</td></tr></tbody>
+          </table>
+          <h3>Responses</h3>
+          <h4>200 OK</h4>
+          <div class="model-container">
+            <div class="model-title">Response Body: <code class="inline">array</code> of <a href="#Linked-Organisation-Summary">Linked-Organisation-Summary</a></div>
+            <p class="model-description">A summary of a linked organisation, suitable for lists.</p>
+          </div>
+        </div>
+      </div>
+      <div class="method-wrapper">
+        <div class="method-header">
+          <div class="method-verb post">POST</div>
+          <div class="method-path">/linked-organisations</div>
+          <div class="method-summary">Create a new Linked Organisation</div>
+        </div>
+        <div class="method-body">
+          <p class="method-description">Creates a new Linked Organisation with the given name and contact email.</p>
+          <h3>Parameters</h3>
+          <table class="properties">
+            <thead><tr><th>Name</th><th>In</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody><tr><td>organisationId<span class="required">*</span></td><td>header</td><td>string</td><td>Your organisation Id</td></tr></tbody>
+          </table>
+          <h3>Request Body</h3>
+          <table class="properties">
+            <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>name<span class="required">*</span></td><td>string</td><td>The name of the organisation to link.</td></tr>
+              <tr><td>organisationContactEmail</td><td>string</td><td>The primary contact email for the linked organisation.</td></tr>
+            </tbody>
+          </table>
+          <h3>Responses</h3>
+          <h4>200 OK</h4>
+          <p>Linked Organisation created successfully.</p>
+        </div>
+      </div>
+      <div class="method-wrapper">
+        <div class="method-header">
+          <div class="method-verb get">GET</div>
+          <div class="method-path">/linked-organisations/<span class="param">{linkedOrganisationId}</span></div>
+          <div class="method-summary">Retrieve a single Linked Organisation</div>
+        </div>
+        <div class="method-body">
+          <p class="method-description">Get detailed information about a single Linked Organisation by its ID.</p>
+          <h3>Parameters</h3>
+          <table class="properties">
+            <thead><tr><th>Name</th><th>In</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>linkedOrganisationId<span class="required">*</span></td><td>path</td><td>string</td><td>The unique identifier for the linked organisation.</td></tr>
+              <tr><td>organisationId<span class="required">*</span></td><td>header</td><td>string</td><td>Your organisation Id</td></tr>
+            </tbody>
+          </table>
+          <h3>Responses</h3>
+          <h4>200 OK</h4>
+          <div class="model-container">
+            <div class="model-title">Response Body: <a href="#Linked-Organisation">Linked-Organisation</a></div>
+            <p class="model-description">The full linked organisation object.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Models Section -->
+      <h2>Models</h2>
+      <div id="Product" class="model-container">
+        <h3 class="model-title">Product</h3>
+        <p class="model-description">A product in the database.</p>
+        <table class="properties">
+          <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>id<span class="required">*</span></td><td>string</td><td>Unique identifier for the product.</td></tr>
+            <tr><td>name<span class="required">*</span></td><td>string</td><td>Name of the product.</td></tr>
+            <tr><td>dateCreated<span class="required">*</span></td><td>string</td><td>Date of creation.</td></tr>
+            <tr><td>status<span class="required">*</span></td><td>string (enum)</td><td>Read only. <br><i>Allowed values: compliant, nonCompliant, inProgress</i></td></tr>
+            <tr><td>fields<span class="required">*</span></td><td><code class="inline">array</code> of <a href="#Field">Field</a></td><td>Custom data fields associated with the product.</td></tr>
+            <tr><td>composition<span class="required">*</span></td><td>object</td><td>Object containing the product's constituent parts.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="Product-Summary" class="model-container" style="margin-top: 24px;">
+        <h3 class="model-title">Product-Summary</h3>
+        <p class="model-description">A product in the database for listing in a table.</p>
+        <table class="properties">
+          <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>id<span class="required">*</span></td><td>string</td><td>Unique identifier.</td></tr>
+            <tr><td>name<span class="required">*</span></td><td>string</td><td>Name of the product.</td></tr>
+            <tr><td>status<span class="required">*</span></td><td>string (enum)</td><td>Read only. <br><i>Allowed values: compliant, nonCompliant, inProgress</i></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="Raw-Material" class="model-container" style="margin-top: 24px;">
+        <h3 class="model-title">Raw-Material</h3>
+        <p class="model-description">A Raw Material in the database.</p>
+        <table class="properties">
+          <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>id<span class="required">*</span></td><td>string</td><td>Unique identifier for the raw material.</td></tr>
+            <tr><td>name<span class="required">*</span></td><td>string</td><td>Name of the raw material.</td></tr>
+            <tr><td>dateCreated<span class="required">*</span></td><td>string</td><td>Date of creation.</td></tr>
+            <tr><td>status<span class="required">*</span></td><td>string (enum)</td><td>Read only. <br><i>Allowed values: compliant, nonCompliant, inProgress</i></td></tr>
+            <tr><td>fields<span class="required">*</span></td><td><code class="inline">array</code> of <a href="#Field">Field</a></td><td>Custom data fields associated with the raw material.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="Raw-Material-Summary" class="model-container" style="margin-top: 24px;">
+        <h3 class="model-title">Raw-Material-Summary</h3>
+        <p class="model-description">A Raw Material in the database for listing in a table.</p>
+        <table class="properties">
+          <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>id<span class="required">*</span></td><td>string</td><td>Unique identifier.</td></tr>
+            <tr><td>name<span class="required">*</span></td><td>string</td><td>Name of the raw material.</td></tr>
+            <tr><td>status<span class="required">*</span></td><td>string (enum)</td><td>Read only. <br><i>Allowed values: compliant, nonCompliant, inProgress</i></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="Linked-Organisation" class="model-container" style="margin-top: 24px;">
+        <h3 class="model-title">Linked-Organisation</h3>
+        <p class="model-description">A Linked Organisation in the database.</p>
+        <table class="properties">
+          <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>id<span class="required">*</span></td><td>string</td><td>Unique identifier for the linked organisation.</td></tr>
+            <tr><td>name<span class="required">*</span></td><td>string</td><td>Name of the linked organisation.</td></tr>
+            <tr><td>dateCreated<span class="required">*</span></td><td>string</td><td>Date of creation.</td></tr>
+            <tr><td>status<span class="required">*</span></td><td>string (enum)</td><td>Read only. <br><i>Allowed values: compliant, nonCompliant, inProgress</i></td></tr>
+            <tr><td>fields<span class="required">*</span></td><td><code class="inline">array</code> of <a href="#Field">Field</a></td><td>Custom data fields associated with the linked organisation.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="Linked-Organisation-Summary" class="model-container" style="margin-top: 24px;">
+        <h3 class="model-title">Linked-Organisation-Summary</h3>
+        <p class="model-description">A Linked Organisation in the database for listing in a table.</p>
+        <table class="properties">
+          <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>id<span class="required">*</span></td><td>string</td><td>Unique identifier.</td></tr>
+            <tr><td>name<span class="required">*</span></td><td>string</td><td>Name of the linked organisation.</td></tr>
+            <tr><td>status<span class="required">*</span></td><td>string (enum)</td><td>Read only. <br><i>Allowed values: compliant, nonCompliant, inProgress</i></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="Field" class="model-container" style="margin-top: 24px;">
+        <h3 class="model-title">Field</h3>
+        <p class="model-description">A single property associated with a Worldover database item.</p>
+        <table class="properties">
+          <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>id<span class="required">*</span></td><td>string</td><td>Unique identifier for the field.</td></tr>
+            <tr><td>name<span class="required">*</span></td><td>string</td><td>Name of the field.</td></tr>
+            <tr><td>value</td><td>oneOf[string, number, boolean, object]</td><td>The value of the field, which can be of various types.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="Formulation-Summary" class="model-container" style="margin-top: 24px;">
+        <h3 class="model-title">Formulation-Summary</h3>
+        <p class="model-description">A Formulation for listing in a Product's composition.</p>
+        <table class="properties">
+          <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>id<span class="required">*</span></td><td>string</td><td>Unique identifier.</td></tr>
+            <tr><td>name<span class="required">*</span></td><td>string</td><td>Name of the formulation.</td></tr>
+            <tr><td>status<span class="required">*</span></td><td>string (enum)</td><td>Read only. <br><i>Allowed values: compliant, nonCompliant, inProgress</i></td></tr>
+            <tr><td>isLive</td><td>boolean</td><td>Indicates if the formulation is currently live.</td></tr>
+            <tr><td>latestVersion</td><td>integer</td><td>The latest version number of the formulation.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="Artwork-Summary" class="model-container" style="margin-top: 24px;">
+        <h3 class="model-title">Artwork-Summary</h3>
+        <p class="model-description">An Artwork for listing in a Product's composition.</p>
+        <table class="properties">
+          <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>id<span class="required">*</span></td><td>string</td><td>Unique identifier.</td></tr>
+            <tr><td>name<span class="required">*</span></td><td>string</td><td>Name of the artwork.</td></tr>
+            <tr><td>status<span class="required">*</span></td><td>string (enum)</td><td>Read only. <br><i>Allowed values: compliant, nonCompliant, inProgress</i></td></tr>
+            <tr><td>latestVersion</td><td>integer</td><td>The latest version number of the artwork.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="Component-Summary" class="model-container" style="margin-top: 24px;">
+        <h3 class="model-title">Component-Summary</h3>
+        <p class="model-description">A Component for listing in a Product's composition.</p>
+        <table class="properties">
+          <thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>id<span class="required">*</span></td><td>string</td><td>Unique identifier.</td></tr>
+            <tr><td>name<span class="required">*</span></td><td>string</td><td>Name of the component.</td></tr>
+            <tr><td>status<span class="required">*</span></td><td>string (enum)</td><td>Read only. <br><i>Allowed values: compliant, nonCompliant, inProgress</i></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </body>
 </html>

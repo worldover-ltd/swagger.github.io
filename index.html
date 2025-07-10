@@ -6,10 +6,12 @@
     <title>Worldover Platform API</title>
     <style type="text/css">
       :root {
-        --primary-color: #393c41;
-        --success-color: #1658a3;
+        --primary-color: #485a6e;
+        --success-color: #485a6e;
         --warning-color: #d97706;
         --danger-color: #dc2626;
+        --link-color: #2563eb;
+        --link-hover-color: #1d4ed8;
         --text-primary: #1f2937;
         --text-secondary: #6b7280;
         --border-color: #e5e7eb;
@@ -40,7 +42,7 @@
       }
       
       h2 {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 600;
         margin-top: 40px;
         margin-bottom: 20px;
@@ -50,7 +52,7 @@
       h3 {
         font-size: 18px;
         font-weight: 600;
-        margin-top: 24px;
+        margin-top: 20px;
         margin-bottom: 12px;
         color: var(--text-primary);
       }
@@ -69,13 +71,13 @@
       }
       
       a {
-        color: var(--primary-color);
+        color: var(--link-color);
         text-decoration: none;
-        transition: opacity 0.2s;
+        transition: color 0.2s;
       }
       
       a:hover {
-        opacity: 0.8;
+        color: var(--link-hover-color);
         text-decoration: underline;
       }
       
@@ -108,7 +110,7 @@
       }
       
       .model {
-        margin: 0 0 24px 20px;
+        margin: 0 0 20px 20px;
         padding: 16px;
         background-color: var(--bg-light);
         border-radius: 8px;
@@ -121,7 +123,7 @@
       }
       
       .method-notes {
-        margin: 16px 0 24px 0;
+        margin: 16px 0 20px 0;
         color: var(--text-secondary);
       }
       
@@ -204,12 +206,13 @@
         border-radius: 4px;
         font-size: 14px;
         transition: all 0.2s;
+        color: var(--link-color);
       }
       
       .up:hover {
-        background-color: var(--primary-color);
+        background-color: var(--link-color);
         color: white;
-        border-color: var(--primary-color);
+        border-color: var(--link-color);
         text-decoration: none;
       }
       
@@ -233,8 +236,18 @@
       
       .param-type {
         font-style: italic;
-        color: var(--primary-color);
+        color: var(--text-secondary);
         font-size: 14px;
+      }
+      
+      /* Model links in param-type */
+      .param-type a {
+        color: var(--link-color);
+        font-weight: 500;
+      }
+      
+      .param-type a:hover {
+        color: var(--link-hover-color);
       }
       
       .param-enum-header {
@@ -253,7 +266,7 @@
       
       .field-label {
         padding: 0;
-        margin: 24px 0 12px 0;
+        margin: 20px 0 12px 0;
         clear: both;
         font-weight: 600;
         color: var(--text-primary);
@@ -261,8 +274,8 @@
       }
       
       .field-items {
-        padding: 0 0 15px 0;
-        margin-bottom: 15px;
+        padding: 0 0 10px 0;
+        margin-bottom: 10px;
       }
       
       .return-type {
@@ -272,8 +285,12 @@
       }
       
       .return-type a {
-        color: var(--primary-color);
+        color: var(--link-color);
         font-weight: 500;
+      }
+      
+      .return-type a:hover {
+        color: var(--link-hover-color);
       }
       
       .param-header {
@@ -333,6 +350,16 @@
         margin-bottom: 8px;
         font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
       }
+      
+      /* Responses section model links */
+      .field-label + a {
+        color: var(--link-color);
+        font-weight: 500;
+      }
+      
+      .field-label + a:hover {
+        color: var(--link-hover-color);
+      }
     </style>
   </head>
   <body>
@@ -341,7 +368,6 @@
 
   <h3>Table of Contents </h3>
   <div class="method-summary"></div>
-  <h4><a href="#Default">Default</a></h4>
   <ul>
   <li><a href="#createLinkedOrganisation"><code><span class="http-method">post</span> /linked-organisations</code></a></li>
   <li><a href="#createProduct"><code><span class="http-method">post</span> /products</code></a></li>
@@ -353,8 +379,7 @@
   <li><a href="#getProductById"><code><span class="http-method">get</span> /products/{productId}</code></a></li>
   <li><a href="#getRawMaterialById"><code><span class="http-method">get</span> /raw-materials/{rawMaterialId}</code></a></li>
   </ul>
-
-  <h1><a name="Default">Default</a></h1>
+  <hr/>
   <div class="method"><a name="createLinkedOrganisation"></a>
     <div class="method-path">
     

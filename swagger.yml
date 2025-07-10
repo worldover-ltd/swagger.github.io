@@ -1,0 +1,518 @@
+openapi: 3.0.0
+info:
+  title: Worldover Platform API
+  description: The official Worldover API for retrieving and updating your organisation's data in the Worldover platform.
+  version: 1.0.0
+  license:
+    name: ""
+paths:
+  /products:
+    get:
+      operationId: getAllProducts
+      summary: Retrieve all products
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product-Summary"
+      description: List all Products in your organisation
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: organisationId
+          description: Your organisation Id
+          required: true
+    post:
+      operationId: createProduct
+      summary: Create a new product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                templateId:
+                  type: string
+      responses:
+        "200":
+          description: Product created successfully
+      description: "Creates a new Product according to the provided template ID. If no template ID is provided, it creates a blank Product."
+      parameters:
+        - schema:
+            type: string
+          in: header
+          description: Your organisation Id
+          name: organisationId
+          required: true
+  "/products/{productId}":
+    get:
+      operationId: getProductById
+      summary: Retrieve a single product
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+        - schema:
+            type: string
+          in: header
+          name: organisationId
+          description: Your organisation Id
+          required: true
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+      description: Get information about a single Product by its ID.
+    parameters:
+      - schema:
+          type: string
+        name: productId
+        in: path
+        required: true
+  /raw-materials:
+    post:
+      summary: Create a new Raw Material
+      tags: []
+      responses:
+        "200":
+          description: Raw Material created successfully
+      operationId: createRawMaterial
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  x-stoplight:
+                    id: ppo6vyuk3yie3
+                templateId:
+                  type: string
+                  x-stoplight:
+                    id: 7qraxlzh5kmav
+                supplierId:
+                  type: string
+                  x-stoplight:
+                    id: 7wxrbnzysvj0o
+      description: "Creates a new Raw Material according to the provided template ID. If no template ID is provided, it creates a blank Raw Material."
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: organisationId
+          description: Your organisation Id
+          required: true
+    get:
+      summary: Retrieve all Raw Materials
+      tags: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Raw-Material-Summary"
+      operationId: getAllRawMaterials
+      description: List all Raw Materials in your organisation
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: organisationId
+          description: Your organisation Id
+          required: true
+  "/raw-materials/{rawMaterialId}":
+    parameters:
+      - schema:
+          type: string
+        name: rawMaterialId
+        in: path
+        required: true
+    get:
+      summary: Retrieve a single Raw Material
+      tags: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Raw-Material"
+      operationId: getRawMaterialById
+      description: Get information about a single Raw Material by its ID.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          description: Your organisation Id
+          name: organisationId
+          required: true
+  /linked-organisations:
+    get:
+      summary: Retrieve all Linked-Organisations
+      tags: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Linked-Organisation-Summary"
+      operationId: getLinkedOrganisations
+      description: List all Linked Organisations that you are connected to.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          description: Your organisation Id
+          name: organisationId
+          required: true
+    post:
+      summary: Create a new Linked Organisation
+      tags: []
+      responses:
+        "200":
+          description: Linked Organisation created successfully
+      operationId: createLinkedOrganisation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  x-stoplight:
+                    id: 68eip1dt9qmfb
+                organisationContactEmail:
+                  type: string
+                  x-stoplight:
+                    id: 3ycv0ipp67yhr
+      description: Creates a new Linked Organisation with the given name.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          description: Your organisation Id
+          name: organisationId
+          required: true
+  "/linked-organisations/{linkedOrganisationId}":
+    parameters:
+      - schema:
+          type: string
+        name: linkedOrganisationId
+        in: path
+        required: true
+    get:
+      summary: Retrieve a single Linked Organisation
+      tags: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Linked-Organisation"
+      operationId: getLinkedOrganisationById
+      description: Get information about a single Linked Organisation by its ID.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          description: Your organisation Id
+          name: organisationId
+          required: true
+components:
+  schemas:
+    Product:
+      type: object
+      description: A product in the database test
+      required:
+        - id
+        - name
+        - dateCreated
+        - status
+        - fields
+        - composition
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        dateCreated:
+          type: string
+          x-stoplight:
+            id: bka2h5tm96zr0
+        status:
+          x-stoplight:
+            id: 8igfteyp1o2w8
+          enum:
+            - compliant
+            - nonCompliant
+            - inProgress
+          readOnly: true
+        fields:
+          type: array
+          x-stoplight:
+            id: kujl7czxg4n7x
+          items:
+            $ref: "#/components/schemas/Field"
+        composition:
+          type: object
+          x-stoplight:
+            id: ofug6s51ubw0t
+          required:
+            - formulations
+            - components
+            - artworks
+          properties:
+            formulations:
+              x-stoplight:
+                id: 9kccbxy4ea3sq
+              type: array
+              items:
+                $ref: "#/components/schemas/Formulation-Summary"
+            components:
+              type: array
+              x-stoplight:
+                id: ppbrr0cpi1xas
+              items:
+                $ref: "#/components/schemas/Component-Summary"
+            artworks:
+              type: array
+              x-stoplight:
+                id: 6sm3ysz6k2n3y
+              items:
+                $ref: "#/components/schemas/Artwork-Summary"
+    Product-Summary:
+      type: object
+      description: A product in the database for listing in a table
+      title: Product-Summary
+      required:
+        - id
+        - name
+        - status
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          enum:
+            - compliant
+            - nonCompliant
+            - inProgress
+          readOnly: true
+    Raw-Material:
+      type: object
+      description: A Raw Material in the database
+      required:
+        - id
+        - name
+        - dateCreated
+        - status
+        - fields
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        dateCreated:
+          type: string
+          x-stoplight:
+            id: bka2h5tm96zr0
+        status:
+          x-stoplight:
+            id: 8igfteyp1o2w8
+          enum:
+            - compliant
+            - nonCompliant
+            - inProgress
+          readOnly: true
+        fields:
+          type: array
+          x-stoplight:
+            id: kujl7czxg4n7x
+          items:
+            $ref: "#/components/schemas/Field"
+    Raw-Material-Summary:
+      type: object
+      description: A Raw Material in the database for listing in a table
+      title: Raw-Material-Summary
+      required:
+        - id
+        - name
+        - status
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          enum:
+            - compliant
+            - nonCompliant
+            - inProgress
+          readOnly: true
+    Linked-Organisation:
+      type: object
+      description: A Linked Organisation in the database
+      required:
+        - id
+        - name
+        - dateCreated
+        - status
+        - fields
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        dateCreated:
+          type: string
+          x-stoplight:
+            id: bka2h5tm96zr0
+        status:
+          x-stoplight:
+            id: 8igfteyp1o2w8
+          enum:
+            - compliant
+            - nonCompliant
+            - inProgress
+          readOnly: true
+        fields:
+          type: array
+          x-stoplight:
+            id: kujl7czxg4n7x
+          items:
+            $ref: "#/components/schemas/Field"
+    Linked-Organisation-Summary:
+      type: object
+      description: A Linked Organisation in the database for listing in a table
+      title: Linked-Organisation-Summary
+      required:
+        - id
+        - name
+        - status
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          enum:
+            - compliant
+            - nonCompliant
+            - inProgress
+          readOnly: true
+    Field:
+      title: Field
+      type: object
+      description: A single property associated with a Worldover database item
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        value:
+          oneOf:
+            - type: string
+            - type: number
+            - type: boolean
+            - type: object
+    Formulation-Summary:
+      type: object
+      description: A Formulation for listing in a Product's composition
+      title: Formulation-Summary
+      required:
+        - id
+        - name
+        - status
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          enum:
+            - compliant
+            - nonCompliant
+            - inProgress
+          readOnly: true
+        isLive:
+          type: boolean
+          x-stoplight:
+            id: 2xmly4ymv4plo
+        latestVersion:
+          type: integer
+          x-stoplight:
+            id: x0d2kqlc79lgi
+    Artwork-Summary:
+      type: object
+      description: An Artwork for listing in a Product's composition
+      title: Artwork-Summary
+      required:
+        - id
+        - name
+        - status
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          enum:
+            - compliant
+            - nonCompliant
+            - inProgress
+          readOnly: true
+        latestVersion:
+          type: integer
+          x-stoplight:
+            id: 3um79o9nx82x5
+    Component-Summary:
+      type: object
+      description: A Component for listing in a Product's composition
+      title: Component-Summary
+      required:
+        - id
+        - name
+        - status
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          enum:
+            - compliant
+            - nonCompliant
+            - inProgress
+          readOnly: true
